@@ -6,16 +6,15 @@ const response = {
     data: [],
   };
 
-class ProductController {
+class ProductInController {
     static async save(req, res) {
         const { body } = req;
     
         try {
           const save = await models.ProductIn.create({
-            name: body.name,
-            stock : body.stock,
-            price : body.price,
-            userId: body.userId
+            date: body.date,
+            total : body.total,
+            productId: body.userId
           });
           response.data=save;
           response.message = "sukses simpan data";
@@ -30,7 +29,7 @@ class ProductController {
 
     static async read(req, res) {
         try {
-            const data = await models.Product.findAll({ attributes: ["name", "stock", "price","userId"],
+            const data = await models.ProductIn.findAll({ attributes: ["date", "total", "poductId"],
             });
             response.data = data
             response.message = "Data is successfully retrieved"
@@ -46,10 +45,10 @@ class ProductController {
 
     static async find(req, res) {
         const { id } = req.params;
-        const product = await models.Product.findOne({
+        const product = await models.ProductIn.findOne({
             where: { id: id },
             include: [
-                { model: User, as: 'user' },
+                { model: Product, as: 'product' },
             ]
         });
         try {
@@ -67,21 +66,21 @@ class ProductController {
 
     static async update(req, res) {
         try {
-            if (req.params.id != req.productId) {
+            if (req.params.id != req.productInId) {
                 return res.status(401).json("User not found")
             }
-            const data = await models.Product.findByPk(req.userId)
-            await models.Product.update(req.body, {
+            const data = await models.ProductIn.findByPk(req.userId)
+            await models.ProductIn.update(req.body, {
                 where: {
-                    id: req.productId,
+                    id: req.productInId,
                 },
             })
             response.data = {
                 "New Data" : req.body,
                 "Old Data" : {
-                    username: data.dataValues.name,
-                    email: data.dataValues.stock,
-                    fullname: data.dataValues.price                
+                    date: data.dataValues.date,
+                    total: data.dataValues.total,
+                    productId: data.dataValues.productId                
                 }
             }
             response.message = "Data is successfully updated";
@@ -96,7 +95,7 @@ class ProductController {
 
     static async delete(req, res) {
         const { id } = req.params;
-        const delProduct = await models.Product.destroy({ 
+        const delProduct = await models.ProductIn.destroy({ 
             where: {
                 id: id
             }
@@ -115,4 +114,4 @@ class ProductController {
  }
 }
 
-module.exports = ProductController;
+module.exports = ProductInController;
