@@ -3,11 +3,11 @@ const app = express();
 const bodyParser = require("body-parser");
 const port = 3000;
 
-const rootIndex = require("./src/routes/index");
+const routerIndex = require("./src/routes/index");
 const routerUsers = require("./src/routes/users");
 const routerProducts = require("./src/routes/products");
-const routerProductsIn = require("./src/routes/productsIn");
-const routerProductsOut = require("./src/routes/productsOut");
+const routerProductsIn = require("./src/routes/productIn");
+const routerProductsOut = require("./src/routes/productOut");
 
 
 
@@ -18,7 +18,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-app.use("/", rootIndex);
+app.use("/", routerIndex);
 app.use("/users", routerUsers);
 app.use("/products", routerProducts);
 app.use("/productsIn", routerProductsIn);

@@ -115,7 +115,7 @@ class UserController {
                 return res.status(401).json("You are not the user")
             }
             const data = await models.User.findByPk(req.userId)
-            await models.Author.destroy({
+            await models.User.destroy({
                 where: {
                     id: req.user.id,
                 }   

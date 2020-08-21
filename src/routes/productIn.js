@@ -6,7 +6,7 @@ const ProductsInController = require("../controllers/ProductInController");
 
 
 router.get("/", ProductsInController.read);
-router.post("/", ProductsInController.create);
+router.post("/", ProductsInController.save);
 
 router.get("/:id", ProductsInController.find);
 router.patch("/:id", ProductsInController.update);

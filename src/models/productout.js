@@ -23,5 +23,5 @@ module.exports = (sequelize, DataTypes) => {
         sequelize,
         modelName: 'ProductOut',
     });
-    return ProductIn;
+    return ProductOut;
 };
