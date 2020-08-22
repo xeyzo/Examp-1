@@ -57,24 +57,18 @@ class UserController {
 
 
     static async find(req, res) {
+        const { id } = req.params;
+        const userdetail = await models.User.findByPk(id);
         try {
-            if (req.params.id != req.userId) {
-                return res.status(401).json("You are not the user")
-            }
-            const data =  await models.User.findByPk(req.userId, {
-                include: [ 
-                    { model: models.Product}
-                ]
-            })
-            response.data = data;
-            response.message = "Find data successfully";
-            response.status = "Success"
-            
-            res.json(response)
-        } catch(error) {
-            response.status = "Fail",
-            response.message = error.message,
-            res.status(400).json(response)
+          if (!userdetail) throw new Error("User not found");
+          response.data = userdetail;
+          response.status = "success";
+          res.json(response);
+        } catch (error) {
+          response.message = error.message;
+          response.data = {};
+          response.status = "fail";
+          res.status(404).json(response);
         }
     }
 
